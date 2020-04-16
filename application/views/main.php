@@ -63,9 +63,6 @@
           <ul class="nav navbar-nav">
             <li><a href="/home">Home</a></li>
           </ul>
-          <ul class="nav navbar-nav">
-            <li><a href="/diamonddraw">Hệ thống rút kim cương</a></li>
-          </ul>
         </div>
         <!-- /.navbar-collapse -->
         <!-- Navbar Right Menu -->
