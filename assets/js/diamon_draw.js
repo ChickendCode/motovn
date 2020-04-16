@@ -6,8 +6,8 @@ $(function(){
             type: 'POST',
             data: {'keyParam': 'valueParam'},
             success: function( data, textStatus, jQxhr ){
-                showModelDialog(TYPE_SUCCESS);
-                // showModelDialog(TYPE_DANGER);
+                showModelDialog(TYPE_SUCCESS, TITLE, 'Rút tiền thành công');
+                // showModelDialog(TYPE_DANGER, TITLE, 'Rút tiền thất bại');
             },
             error: function( jqXhr, textStatus, errorThrown ){
                 console.log( errorThrown );
