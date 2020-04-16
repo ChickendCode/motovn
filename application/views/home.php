@@ -77,7 +77,7 @@
               <!-- Menu Toggle Button -->
               <a href="#">
                 <span class="hidden-xs">Xin chào <?php echo $userdata['username'] ?> - Bạn đang có <?php echo $userdata['money'] ?> xu</span>
-                <button type="button" class="btn btn-success" style="margin-left:5px">Đăng xuất</button>
+                <button type="button" class="btn btn-success" style="margin-left:5px" id="logout">Đăng xuất</button>
               </a>
           </li>
         </ul>
@@ -139,3 +139,4 @@
 
 </body>
 </html>
+<script src="../../assets/js/home.js"></script>
