@@ -1926,7 +1926,7 @@ class Ion_auth_model extends CI_Model
 		    'money'       			=> $user->money
 		);
 
-		$this->session->set_userdata($session_data);
+		$this->session->set_userdata('identity', $session_data);
 
 		$this->trigger_events('post_set_session');
 
