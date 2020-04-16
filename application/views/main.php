@@ -61,10 +61,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#">Home</a></li>
+            <li><a href="/home">Home</a></li>
           </ul>
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Hệ thống rút kim cương</a></li>
+            <li><a href="/diamonddraw">Hệ thống rút kim cương</a></li>
           </ul>
         </div>
         <!-- /.navbar-collapse -->

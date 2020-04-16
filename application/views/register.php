@@ -22,7 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--  [if lt IE 9]>
+  <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
@@ -34,29 +34,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg"><?php echo lang('auth_sign_session'); ?></p>
+    <p class="login-box-msg text-danger">
+      <?php 
+          if(isset($message)) {
+            echo $message;
+          }
+      ?></p>
 
-    <?php echo form_open('auth/login');?>
+    <?php echo form_open('register/regist');?>
       <div class="form-group has-feedback">
-        <!-- <input type="email" class="form-control" placeholder="Email"> -->
-        <?php echo form_input($identity, '', array('required'=>'required', 'class' => 'form-control', 'placeholder'=> lang('auth_your_email')));?>
+        <?php echo form_input($username, '', array('required'=>'required','class' => 'form-control', 'placeholder'=> 'Tên đăng nhập'));?>
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <?php echo form_input($password, '', array('required'=>'required','class' => 'form-control', 'placeholder'=> 'Mật khẩu'));?>
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <?php echo form_input($re_password, '', array('required'=>'required','class' => 'form-control', 'placeholder'=> 'Nhập lại mật khẩu'));?>
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <?php echo form_input($email, '', array('required'=>'required','class' => 'form-control', 'placeholder'=> 'Email'));?>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <!-- <input type="password" class="form-control" placeholder="Password"> -->
-        <?php echo form_input($password, '', array('required'=>'required', 'class' => 'form-control', 'placeholder'=> lang('auth_your_password')));?>
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <?php echo form_input($phone, '', array('required'=>'required','class' => 'form-control', 'placeholder'=> 'Số điện thoại'));?>
+        <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
       </div>
       <div class="row">
         <div class="col-xs-6">
-            <?php echo form_submit('submit', lang('auth_login'), array('class' => 'btn btn-primary btn-block btn-flat'));?>
-       </div>
-       <div class="col-xs-6">
-            <a href="/register">
-              <?php echo form_button('button', lang('auth_new_member'), array('class' => 'btn btn-warning btn-block btn-flat', 'id'=>'register'));?>
-            </a>
-       </div>
+              <?php echo form_submit('submit', 'Đăng ký', array('required'=>'required','class' => 'btn btn-primary btn-block btn-flat'));?>
         </div>
+        <div class="col-xs-6">
+        <a href="/auth/login">
+              <?php echo form_button('button', 'Đăng nhập', array('id'=>'loginBtn', 'required'=>'required','class' => 'btn btn btn-warning btn-block btn-flat'));?>
+        </a>
+            </div>
+      </div>
       <?php echo form_close();?>
   </div>
   <!-- /.login-box-body -->

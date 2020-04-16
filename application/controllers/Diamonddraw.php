@@ -61,6 +61,7 @@ class Diamonddraw extends CI_Controller {
 		$userdata =  $this->session->userdata('identity');
 		$role = $this->T_role_model->get_t_role(XYMU.$userdata['username'], $db_server_other);
 		$this->session->userdata("role", $role);
+		echo $this->session->userdata("role");
 
 		try {
 			$response[REQ_DATA_KEY] = array(
@@ -95,28 +96,29 @@ class Diamonddraw extends CI_Controller {
 			$params = array('money'=> $money);
 			$this->T_user_model->update_t_user($userdata['userid'], $params);
 
-			// $content = '';
-			// if ($serverName == SERVER_1) {
-			// 	$content = DIAMOND_DRAW_01;
-			// } else {
-			// 	$content = DIAMOND_DRAW_02;
-			// }
+			$content = '';
+			if ($serverName == SERVER_1) {
+				$content = DIAMOND_DRAW_01;
+			} else {
+				$content = DIAMOND_DRAW_02;
+			}
 
-			// $role = $this->session->userdata("role");
-			// //  Ghi log vào bảng t_tranlog
-			// $params = array(
-			// 	'uid' => $userdata['userid'],
-			// 	'title' => DIAMOND_DRAW,
-			// 	'timecreate' => date('Y-m-d H:i:s'),
-			// 	'coin_request' => $money_client,
-			// 	'coin_receive' => $money_client,
-			// 	'roleid' => $role['rid'],
-			// 	'rolename' => $this->input->post('rolename'),
-			// 	'zoneid' => $role['zoneid'],
-			// 	'content' => $content,
-			// );
+			$role = $this->session->userdata("role");
+			echo print_r($role);
+			//  Ghi log vào bảng t_tranlog
+			$params = array(
+				'uid' => $userdata['userid'],
+				'title' => DIAMOND_DRAW,
+				'timecreate' => date('Y-m-d H:i:s'),
+				'coin_request' => $money_client,
+				'coin_receive' => $money_client,
+				'roleid' => $role['rid'],
+				'rolename' => $role['rname'],
+				'zoneid' => $role['zoneid'],
+				'content' => $content,
+			);
 			
-			// $this->T_tranlog_model->add_t_tranlog($params);
+			$this->T_tranlog_model->add_t_tranlog($params);
 			
 
 			// if If an exception occurs rollback , otherwise commit
@@ -178,9 +180,6 @@ class Diamonddraw extends CI_Controller {
 				// }
 			}
 
-			$response[REQ_DATA_KEY] = array(
-				'role' => $role
-			);
         } catch (Exception $e) {
 			log_message('error', $e->getMessage());
 			$response[REQ_STATUS_KEY] = REQ_STATUS_NG;

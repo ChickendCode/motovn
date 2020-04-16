@@ -109,3 +109,6 @@ define('DIAMOND_DRAW_02', 'Rút {0} Kim Cương vào máy chủ S02');
 define('SERVER_1', 'server_1');
 define('SERVER_2', 'server_2');
 define('DIAMOND_DRAW', 'Rút Kim Cương');
+define('MSG_USER_EXIST', 'Tên đăng nhập đã tồn tại');
+define('MSG_SUCCCESS', 'Đăng ký thành công');
+define('MSG_NOT_COMPARE', 'Mật khẩu nhập lại không trùng khớp');
