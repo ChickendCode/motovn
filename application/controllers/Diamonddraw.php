@@ -36,6 +36,7 @@ class Diamonddraw extends CI_Controller {
 		$data['subview'] = 'Diamond_draw';
 		$data['title'] = 'Hệ thống rút kim cương';
 		$data['serverdata'] = $serverdata;
+		$data['diamondlist'] = DIAMOND_LIST;
 		
 		$this->load->view('home.php', $data);
 	}

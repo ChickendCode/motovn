@@ -19,6 +19,9 @@
         <label>Rút kim cương*</label>
         <select class="form-control">
             <option>Chọn rút kim cương</option>
+            <?php foreach ($diamondlist as $key => $value) {?>
+            <option value="<?php echo $key ?>"><?php echo $value ?></option>
+            <?php } ?>
         </select>
     </div>
 
