@@ -32,9 +32,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-  <div class="login-logo">
-    <a href="../../assets/index2.html"><b>Admin</b>LTE</a>
-  </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg"><?php echo lang('auth_sign_session'); ?></p>
@@ -42,31 +39,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php echo form_open('auth/login');?>
       <div class="form-group has-feedback">
         <!-- <input type="email" class="form-control" placeholder="Email"> -->
-        <?php echo form_input($identity, '', array('class' => 'form-control'));?>
+        <?php echo form_input($identity, '', array('class' => 'form-control', 'placeholder'=> lang('auth_your_email')));?>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
         <!-- <input type="password" class="form-control" placeholder="Password"> -->
-        <?php echo form_input($password, '', array('class' => 'form-control'));?>
+        <?php echo form_input($password, '', array('class' => 'form-control', 'placeholder'=> lang('auth_your_password')));?>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
-        <div class="col-xs-8">
-            <div class="checkbox icheck">
-                <label>
-                    <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"'); ?><?php echo lang('auth_remember_me'); ?>
-                </label>
-            </div>
-        </div>
-        <div class="col-xs-4">
+        <div class="col-xs-6">
             <?php echo form_submit('submit', lang('auth_login'), array('class' => 'btn btn-primary btn-block btn-flat'));?>
+       </div>
+       <div class="col-xs-6">
+            <?php echo form_submit('submit', lang('auth_new_member'), array('class' => 'btn btn-warning btn-block btn-flat'));?>
        </div>
         </div>
       <?php echo form_close();?>
-
-    <a href="#">I forgot my password</a><br>
-    <a href="register.html" class="text-center">Register a new membership</a>
-
   </div>
   <!-- /.login-box-body -->
 </div>
