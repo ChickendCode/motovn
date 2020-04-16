@@ -1,19 +1,17 @@
 $(function(){
     $('#diamonDraw').click(function(){
+
         $.ajax({
             url: 'Diamonddraw/get_dummy_data',
-            dataType: 'json',
-            type: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify( { "first-name": $('#first-name').val(), "last-name": $('#last-name').val() } ),
-            processData: false,
+            type: 'POST',
+            data: {'keyParam': 'valueParam'},
             success: function( data, textStatus, jQxhr ){
-                $('#response pre').html( JSON.stringify( data ) );
+                showModelDialog(TYPE_SUCCESS);
+                // showModelDialog(TYPE_DANGER);
             },
             error: function( jqXhr, textStatus, errorThrown ){
                 console.log( errorThrown );
             }
         });
-        showModelDialog();
     });
 });

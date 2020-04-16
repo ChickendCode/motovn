@@ -37,6 +37,7 @@ class Diamonddraw extends CI_Controller {
 	}
 
 	public function get_dummy_data() {
+
 		$response = array(
 			REQ_STATUS_KEY => REQ_STATUS_OK,
 			REQ_DATA_KEY => [],
@@ -44,9 +45,8 @@ class Diamonddraw extends CI_Controller {
 		);
 
 		try {
-			$customer_list = $this->Customer_model->get_all_customer();
 			$response[REQ_DATA_KEY] = array(
-				'customer_list' => $customer_list
+				'keyParam' => $this->input->post('keyParam')
 			);
         } catch (Exception $e) {
 			log_message('error', $e->getMessage());

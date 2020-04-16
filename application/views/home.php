@@ -114,7 +114,7 @@
 
 <!-- /.modal -->
 
-<div class="modal modal-danger fade" id="commonModel">
+<div class="modal fade" id="commonModel">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
