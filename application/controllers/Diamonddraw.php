@@ -7,6 +7,7 @@ class Diamonddraw extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library('ion_auth');
+		$this->load->model('T_serverdata_model');
 	}
 
 	/**
@@ -31,8 +32,11 @@ class Diamonddraw extends CI_Controller {
             redirect('auth/login', 'refresh');
 		}
 		
+		$serverdata = $this->T_serverdata_model->get_all_t_serverdata();
 		$data['subview'] = 'Diamond_draw';
-        $data['title'] = 'Hệ thống rút kim cương';
+		$data['title'] = 'Hệ thống rút kim cương';
+		$data['serverdata'] = $serverdata;
+		
 		$this->load->view('home.php', $data);
 	}
 

@@ -5,6 +5,9 @@
         <label>Chọn máy chủ*</label>
         <select class="form-control">
             <option>Chọn máy chủ</option>
+            <?php foreach ($serverdata as $data) {?>
+            <option value="<?php echo $data['Id'] ?>"><?php echo $data['ServerName'] ?></option>
+            <?php } ?>
         </select>
     </div>
     <div class="form-group">
