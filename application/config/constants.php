@@ -104,3 +104,8 @@ define('DIAMOND_LIST', array(
 ));
 // XYMU
 define('XYMU', 'XYMU');
+define('DIAMOND_DRAW_01', 'Rút {0} Kim Cương vào máy chủ S01');
+define('DIAMOND_DRAW_02', 'Rút {0} Kim Cương vào máy chủ S02');
+define('SERVER_1', 'server_1');
+define('SERVER_2', 'server_2');
+define('DIAMOND_DRAW', 'Rút Kim Cương');

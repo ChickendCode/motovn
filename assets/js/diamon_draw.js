@@ -1,10 +1,11 @@
 $(function(){
     $('#diamonDraw').click(function(){
-
+        var money = $('#money').val();
+        var serverName = $('#serverName').val();
         $.ajax({
-            url: 'Diamonddraw/get_dummy_data',
+            url: 'Diamonddraw/diamon_draw',
             type: 'POST',
-            data: {'keyParam': 'valueParam'},
+            data: {'money': money, 'serverName' : serverName},
             success: function( data, textStatus, jQxhr ){
                 showModelDialog(TYPE_SUCCESS, TITLE, 'Rút tiền thành công');
                 // showModelDialog(TYPE_DANGER, TITLE, 'Rút tiền thất bại');
@@ -22,7 +23,7 @@ $(function(){
             type: 'POST',
             data: {'databaseName': databaseName},
             success: function( data, textStatus, jQxhr ){
-                data = JSON.parse(data);
+                data = JSON.parse(data).data;
                 if (data.role) {
                     let html = '';
                     let roles = data.role;

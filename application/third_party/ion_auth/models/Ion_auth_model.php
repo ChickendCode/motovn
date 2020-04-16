@@ -1919,7 +1919,7 @@ class Ion_auth_model extends CI_Model
 		$session_data = array(
 			'identity'             => $user->username,
 			'username'             => $user->username,
-		    'user_id'              => $user->userid,
+		    'userid'              => $user->userid,
 		    'money'       			=> $user->money
 		);
 

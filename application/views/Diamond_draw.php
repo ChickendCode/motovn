@@ -3,8 +3,8 @@
     <legend>Thông tin nhân vật</legend>
     <div class="form-group">
         <label>Chọn máy chủ*</label>
-        <select class="form-control"  id="serverName">
-            <option>Chọn máy chủ</option>
+        <select class="form-control"  id="serverName" required>
+            <option value="">Chọn máy chủ</option>
             <?php foreach ($serverdata as $data) {?>
             <option value="<?php echo $data['DatabaseName'] ?>"><?php echo $data['ServerName'] ?></option>
             <?php } ?>
@@ -17,19 +17,19 @@
     </div>
     <div class="form-group">
         <label>Rút kim cương*</label>
-        <select class="form-control">
+        <select class="form-control" id="money">
             <option>Chọn rút kim cương</option>
             <?php foreach ($diamondlist as $key => $value) {?>
             <option value="<?php echo $key ?>"><?php echo $value ?></option>
             <?php } ?>
         </select>
     </div>
-
     <div class="row">
         <div class="col-xs-12">
             <?php echo form_submit('submit', 'Rút kim cương', array('class' => 'btn btn-primary btn-block btn-flat', 'id'=> 'diamonDraw'));?>
        </div>
     </div>
+    
   </fieldset>
   </div>
 
