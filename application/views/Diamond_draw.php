@@ -3,16 +3,16 @@
     <legend>Thông tin nhân vật</legend>
     <div class="form-group">
         <label>Chọn máy chủ*</label>
-        <select class="form-control">
+        <select class="form-control"  id="serverName">
             <option>Chọn máy chủ</option>
             <?php foreach ($serverdata as $data) {?>
-            <option value="<?php echo $data['Id'] ?>"><?php echo $data['ServerName'] ?></option>
+            <option value="<?php echo $data['DatabaseName'] ?>"><?php echo $data['ServerName'] ?></option>
             <?php } ?>
         </select>
     </div>
     <div class="form-group">
         <label>Nhân vật*</label>
-        <select class="form-control">
+        <select class="form-control" id="figure">
         </select>
     </div>
     <div class="form-group">

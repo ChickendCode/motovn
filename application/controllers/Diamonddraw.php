@@ -7,7 +7,7 @@ class Diamonddraw extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library('ion_auth');
-		$this->load->model('T_serverdata_model');
+		$this->load->model(['T_serverdata_model', 'T_role_model']);
 	}
 
 	/**
@@ -38,10 +38,12 @@ class Diamonddraw extends CI_Controller {
 		$data['serverdata'] = $serverdata;
 		$data['diamondlist'] = DIAMOND_LIST;
 		
-		$this->load->view('home.php', $data);
+		$this->load->view('main.php', $data);
 	}
 
-	public function get_dummy_data() {
+
+
+	public function get_figure() {
 
 		$response = array(
 			REQ_STATUS_KEY => REQ_STATUS_OK,
@@ -49,9 +51,14 @@ class Diamonddraw extends CI_Controller {
 			REQ_ERROR_KEY => []
 		);
 
+		$databaseName = $this->input->post('databaseName');
+		$db_server_other = $this->load->database($databaseName, TRUE);
+		$userdata =  $this->session->userdata('identity');
+		$role = $this->T_role_model->get_t_role(XYMU.$userdata['username'], $db_server_other);
+
 		try {
 			$response[REQ_DATA_KEY] = array(
-				'keyParam' => $this->input->post('keyParam')
+				'role' => $role
 			);
         } catch (Exception $e) {
 			log_message('error', $e->getMessage());
