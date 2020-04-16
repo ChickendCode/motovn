@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Diamonddraw extends CI_Controller {
 
 	function __construct()
 	{
@@ -29,7 +29,10 @@ class Welcome extends CI_Controller {
 		if (!$this->ion_auth->logged_in())
         {
             redirect('auth/login', 'refresh');
-        }
-		$this->load->view('welcome_message');
+		}
+		
+		$data['subview'] = 'Diamond_draw';
+        $data['title'] = 'Hệ thống rút kim cương';
+		$this->load->view('home.php', $data);
 	}
 }
