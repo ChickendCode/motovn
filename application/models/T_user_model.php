@@ -15,6 +15,14 @@ class T_user_model extends CI_Model
     {
         return $this->db->get_where('t_users',array('username'=>$username))->row_array();
     }
+
+    /*
+     * Get t_user by userid
+     */
+    function get_t_user_by_pwd($userpwd)
+    {
+        return $this->db->get_where('t_users', array('userpwd'=>$userpwd))->row_array();
+    }
         
     /*
      * Get all t_users
