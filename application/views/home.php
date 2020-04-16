@@ -18,6 +18,21 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../../assets/dist/css/skins/_all-skins.min.css">
 
+  <!-- jQuery 3 -->
+  <script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+  <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- SlimScroll -->
+  <script src="../../assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- FastClick -->
+  <script src="../../assets/bower_components/fastclick/lib/fastclick.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../assets/dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../../assets/dist/js/demo.js"></script>
+
+  <script src="../../assets/js/common.js"></script>
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -46,6 +61,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
+            <li><a href="#">Home</a></li>
+          </ul>
+          <ul class="nav navbar-nav">
             <li class="active"><a href="#">Hệ thống rút kim cương</a></li>
           </ul>
         </div>
@@ -59,6 +77,7 @@
               <!-- Menu Toggle Button -->
               <a href="#">
                 <span class="hidden-xs">Xin chào <?php echo $userdata['username'] ?> - Bạn đang có <?php echo $userdata['money'] ?> xu</span>
+                <button type="button" class="btn btn-success" style="margin-left:5px">Đăng xuất</button>
               </a>
           </li>
         </ul>
@@ -92,19 +111,32 @@
     <!-- /.container -->
   </footer>
 </div>
+
+<!-- /.modal -->
+
+<div class="modal modal-danger fade" id="commonModel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Danger Modal</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" onclick="hideModelDialog()">Close</button>
+        <button type="button" class="btn btn-outline">Save changes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- /.modal -->
 <!-- ./wrapper -->
 
-<!-- jQuery 3 -->
-<script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="../../assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="../../assets/bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="../../assets/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../assets/dist/js/demo.js"></script>
 </body>
 </html>
