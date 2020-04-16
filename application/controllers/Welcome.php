@@ -3,6 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->library('ion_auth');
+	}
+
 	/**
 	 * Index Page for this controller.
 	 *
@@ -20,6 +26,10 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
+		if (!$this->ion_auth->logged_in())
+        {
+            redirect('auth/login', 'refresh');
+        }
 		$this->load->view('welcome_message');
 	}
 }

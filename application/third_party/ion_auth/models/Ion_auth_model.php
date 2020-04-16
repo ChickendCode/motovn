@@ -302,11 +302,10 @@ class Ion_auth_model extends CI_Model
 
 		$this->trigger_events('extra_where');
 
-		$query = $this->db->select('password, salt')
-		                  ->where('id', $id)
+		$query = $this->db->select('userpwd')
+		                  ->where('userid', $id)
 		                  ->limit(1)
-		                  ->order_by('id', 'desc')
-		                  ->get($this->tables['users']);
+		                  ->get('t_users');
 
 		$hash_password_db = $query->row();
 
@@ -316,36 +315,11 @@ class Ion_auth_model extends CI_Model
 		}
 
 		// bcrypt
-		if ($use_sha1_override === FALSE && $this->hash_method == 'bcrypt')
-		{
-			if ($this->bcrypt->verify($password,$hash_password_db->password))
-			{
-				return TRUE;
-			}
-
-			return FALSE;
-		}
-
-		// sha1
-		if ($this->store_salt)
-		{
-			$db_password = sha1($password . $hash_password_db->salt);
-		}
-		else
-		{
-			$salt = substr($hash_password_db->password, 0, $this->salt_length);
-
-			$db_password =  $salt . substr(sha1($salt . $password), 0, -$this->salt_length);
-		}
-
-		if($db_password == $hash_password_db->password)
+		if ($hash_password_db->userpwd == md5($password))
 		{
 			return TRUE;
 		}
-		else
-		{
-			return FALSE;
-		}
+		return FALSE;
 	}
 
 	/**
@@ -1010,11 +984,11 @@ class Ion_auth_model extends CI_Model
 	 * @return    bool
 	 * @author    Mathew
 	 */
-	public function login($identity, $password, $remember=FALSE)
+	public function login($username, $password, $remember=FALSE)
 	{
 		$this->trigger_events('pre_login');
 
-		if (empty($identity) || empty($password))
+		if (empty($username) || empty($password))
 		{
 			$this->set_error('login_unsuccessful');
 			return FALSE;
@@ -1022,49 +996,29 @@ class Ion_auth_model extends CI_Model
 
 		$this->trigger_events('extra_where');
 
-		$query = $this->db->select($this->identity_column . ', email, id, password, active, last_login')
-						  ->where($this->identity_column, $identity)
+		$query = $this->db->select('userid, username, userpwd, money')
+						  ->where('username', $username)
 						  ->limit(1)
-						  ->order_by('id', 'desc')
-						  ->get($this->tables['users']);
-
-		if ($this->is_max_login_attempts_exceeded($identity))
-		{
-			// Hash something anyway, just to take up time
-			$this->hash_password($password);
-
-			$this->trigger_events('post_login_unsuccessful');
-			$this->set_error('login_timeout');
-
-			return FALSE;
-		}
+						  ->get('t_users');
 
 		if ($query->num_rows() === 1)
 		{
 			$user = $query->row();
 
-			$password = $this->hash_password_db($user->id, $password);
-
+			$password = $this->hash_password_db($user->userid, $password);
 			if ($password === TRUE)
 			{
-				if ($user->active == 0)
-				{
-					$this->trigger_events('post_login_unsuccessful');
-					$this->set_error('login_unsuccessful_not_active');
-
-					return FALSE;
-				}
 
 				$this->set_session($user);
 
-				$this->update_last_login($user->id);
+				$this->update_last_login($user->userid);
 
-				$this->clear_login_attempts($identity);
+				// $this->clear_login_attempts($identity);
 
-				if ($remember && $this->config->item('remember_users', 'ion_auth'))
-				{
-					$this->remember_user($user->id);
-				}
+				// if ($remember && $this->config->item('remember_users', 'ion_auth'))
+				// {
+				// 	$this->remember_user($user->id);
+				// }
 
 				$this->trigger_events(array('post_login', 'post_login_successful'));
 				$this->set_message('login_successful');
@@ -1091,41 +1045,6 @@ class Ion_auth_model extends CI_Model
 	 */
 	public function recheck_session()
 	{
-		$recheck = (NULL !== $this->config->item('recheck_timer', 'ion_auth')) ? $this->config->item('recheck_timer', 'ion_auth') : 0;
-
-		if ($recheck !== 0)
-		{
-			$last_login = $this->session->userdata('last_check');
-			if ($last_login + $recheck < time())
-			{
-				$query = $this->db->select('id')
-								  ->where(array($this->identity_column => $this->session->userdata('identity'), 'active' => '1'))
-								  ->limit(1)
-								  ->order_by('id', 'desc')
-								  ->get($this->tables['users']);
-				if ($query->num_rows() === 1)
-				{
-					$this->session->set_userdata('last_check', time());
-				}
-				else
-				{
-					$this->trigger_events('logout');
-
-					$identity = $this->config->item('identity', 'ion_auth');
-
-					if (substr(CI_VERSION, 0, 1) == '2')
-					{
-						$this->session->unset_userdata(array($identity => '', 'id' => '', 'user_id' => ''));
-					}
-					else
-					{
-						$this->session->unset_userdata(array($identity, 'id', 'user_id'));
-					}
-					return FALSE;
-				}
-			}
-		}
-
 		return (bool)$this->session->userdata('identity');
 	}
 
@@ -1949,7 +1868,9 @@ class Ion_auth_model extends CI_Model
 
 		$this->trigger_events('extra_where');
 
-		$this->db->update($this->tables['users'], array('last_login' => time()), array('id' => $id));
+		$date = new DateTime("NOW");
+
+		$this->db->update('t_users', array('lasttime' => $date->format('Y-m-d H:i:s')), array('userid' => $id));
 
 		return $this->db->affected_rows() == 1;
 	}
@@ -1999,12 +1920,10 @@ class Ion_auth_model extends CI_Model
 		$this->trigger_events('pre_set_session');
 
 		$session_data = array(
-		    'identity'             => $user->{$this->identity_column},
-		    $this->identity_column => $user->{$this->identity_column},
-		    'email'                => $user->email,
-		    'user_id'              => $user->id, //everyone likes to overwrite id so we'll use user_id
-		    'old_last_login'       => $user->last_login,
-		    'last_check'           => time(),
+			'identity'             => $user->username,
+			'username'             => $user->username,
+		    'user_id'              => $user->userid,
+		    'money'       			=> $user->money
 		);
 
 		$this->session->set_userdata($session_data);
