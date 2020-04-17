@@ -1,5 +1,6 @@
 <div class="form-group">
 <fieldset>
+    <form id="diamondForm">
     <legend>Thông tin nhân vật</legend>
     <div class="form-group">
         <label>Chọn máy chủ*</label>
@@ -12,21 +13,22 @@
     </div>
     <div class="form-group">
         <label>Nhân vật*</label>
-        <select class="form-control" id="figure">
+        <select class="form-control" id="figure" required>
         </select>
     </div>
     <div class="form-group">
         <label>Rút kim cương*</label>
-        <select class="form-control" id="money">
-            <option>Chọn rút kim cương</option>
+        <select class="form-control" id="money" required>
+            <option value="">Chọn rút kim cương</option>
             <?php foreach ($diamondlist as $key => $value) {?>
             <option value="<?php echo $key ?>"><?php echo $value ?></option>
             <?php } ?>
         </select>
     </div>
+    <form>
     <div class="row">
         <div class="col-xs-12">
-            <?php echo form_submit('submit', 'Rút kim cương', array('class' => 'btn btn-primary btn-block btn-flat', 'id'=> 'diamonDraw'));?>
+            <?php echo form_button('submit', 'Rút kim cương', array('class' => 'btn btn-primary btn-block btn-flat', 'id'=> 'diamonDraw'));?>
        </div>
     </div>
     

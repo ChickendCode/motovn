@@ -40,14 +40,24 @@ class Register extends CI_Controller {
 		$phone = $this->input->post('phone');
 		$date = new DateTime("NOW");
 
-		if ($password != $re_password) {
-			$data = $this->createFormData(
-				$username, 
-				$password,
-				$re_password,
-				$email,
-				$phone
-			);
+		$data = $this->createFormData(
+			$username, 
+			$password,
+			$re_password,
+			$email,
+			$phone
+		);
+
+		if (strlen($username) <= 6) {
+			$data['message'] = MSG_USER_NAME_THAN_6;
+			$data['type'] = TYPE_DANGER;
+		} else if (strlen($password) <= 6) {
+			$data['message'] = MSG_PASSWORD_THAN_6;
+			$data['type'] = TYPE_DANGER;
+		} else if (strlen($phone) <= 9) {
+			$data['message'] = MSG_PHONE_NUMBER_THAN_9;
+			$data['type'] = TYPE_DANGER;
+		} else if ($password != $re_password) {
 			$data['message'] = MSG_NOT_COMPARE;
 			$data['type'] = TYPE_DANGER;
 		} else {
