@@ -13,7 +13,8 @@ class Diamonddraw extends CI_Controller {
 			'T_user_model',
 			'T_inputlog_model',
 			'T_tempmoney_model',
-			'T_tranlog_model'
+			'T_tranlog_model',
+			'Ion_auth_model'
 			]);
 	}
 
@@ -93,7 +94,8 @@ class Diamonddraw extends CI_Controller {
 			
 			//  Trừ money trong t_users (Database server_info)
 			$money = $userdata['money'] - (int)$money_client;
-
+			// echo $userdata['money'].'-';
+			// echo $money_client;
 			if ($money < 0) {
 				$response[REQ_STATUS_KEY] = REQ_STATUS_NG;
 				$response[REQ_ERROR_KEY] = [MSG_MONEY_INVALID];
@@ -135,6 +137,9 @@ class Diamonddraw extends CI_Controller {
 				{
 					$this->db->trans_commit();
 					log_message('error', 'Update data success');
+
+					$user = (object)$this->T_user_model->get_t_user($userdata['username']);
+					$this->Ion_auth_model->set_session($user);
 
 					// Connect db server other
 					$db_server_other = $this->load->database($serverName, TRUE);
