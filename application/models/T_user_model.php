@@ -19,9 +19,9 @@ class T_user_model extends CI_Model
     /*
      * Get t_user by userid
      */
-    function get_t_user_by_pwd($userpwd)
+    function get_t_user_by_pwd($username, $userpwd)
     {
-        return $this->db->get_where('t_users', array('userpwd'=>$userpwd))->row_array();
+        return $this->db->get_where('t_users', array('username'=>$username, 'userpwd'=>$userpwd))->result_array();
     }
         
     /*

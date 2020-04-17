@@ -49,8 +49,8 @@ class User extends CI_Controller {
 		$phone = $this->input->post('phone');
 		$date = new DateTime("NOW");
 		
-		$user = $this->T_user_model->get_t_user_by_pwd(md5($old_password));
-
+		$userdata =  $this->session->userdata('identity');
+		$user = $this->T_user_model->get_t_user_by_pwd($userdata['username'], md5($old_password));
 		$data = $this->createFormData(
 			$old_password, 
 			$new_password,
@@ -59,7 +59,7 @@ class User extends CI_Controller {
 			$phone
 		);
 
-		if (!isset($user)) {
+		if (count($user) == 0) {
 			$data['message'] = MSG_OLD_PASS_NOT_COMPARE;
 			$data['type'] = TYPE_DANGER;
 		} else if (strlen($new_password) <= 6) {
@@ -74,8 +74,6 @@ class User extends CI_Controller {
 				'regtime' => $date->format('Y-m-d H:i:s')
 			);
 
-			$userdata =  $this->session->userdata('identity');
-	
 			$this->T_user_model->update_t_user($userdata['userid'], $params);
 
 			$data = $this->createFormData('', '', '', $email, $phone);
