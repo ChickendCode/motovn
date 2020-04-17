@@ -116,3 +116,4 @@ define('MSG_OLD_PASS_NOT_COMPARE', 'Mật khẩu cũ nhập không đúng');
 define('MSG_SUCCCESS_UPDATE', 'Cập nhật thành công');
 define('TYPE_SUCCESS', 'modal-success');
 define('TYPE_DANGER', 'modal-danger');
+define('LOGIN_WRONG', 'Sai tên đăng nhập hoặc password');

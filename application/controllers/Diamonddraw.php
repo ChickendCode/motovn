@@ -34,10 +34,7 @@ class Diamonddraw extends CI_Controller {
 	 */
 	public function index()
 	{
-		if (!$this->ion_auth->logged_in())
-        {
-            redirect('auth/login', 'refresh');
-		}
+		$this->ion_auth->check_login();
 		
 		$serverdata = $this->T_serverdata_model->get_all_t_serverdata();
 		$data['subview'] = 'Diamond_draw';
@@ -49,6 +46,7 @@ class Diamonddraw extends CI_Controller {
 	}
 
 	public function get_figure() {
+		$this->ion_auth->check_login();
 
 		$response = array(
 			REQ_STATUS_KEY => REQ_STATUS_OK,
@@ -77,7 +75,8 @@ class Diamonddraw extends CI_Controller {
 	}
 
 	public function diamon_draw() {
-
+		$this->ion_auth->check_login();
+		
 		$response = array(
 			REQ_STATUS_KEY => REQ_STATUS_OK,
 			REQ_DATA_KEY => [],

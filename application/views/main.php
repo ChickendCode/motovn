@@ -52,7 +52,7 @@
     <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../../assets/index2.html" class="navbar-brand"><b>MOTOVN</b></a>
+          <a class="navbar-brand"><b>MOTOVN</b></a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -115,14 +115,14 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="hideModelDialog()">
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">l</h4>
       </div>
       <div class="modal-body">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" onclick="hideModelDialog()">Close</button>
+        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" onclick="hideModelDialog()">Đóng</button>
         <button type="button" class="btn btn-outline">Save changes</button>
       </div>
     </div>

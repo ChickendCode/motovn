@@ -26,10 +26,7 @@ class Home extends CI_Controller {
 	 */
 	public function index()
 	{
-		if (!$this->ion_auth->logged_in())
-        {
-            redirect('auth/login', 'refresh');
-		}
+		$this->ion_auth->check_login();
 		
 		$data['subview'] = 'home';
 		$data['title'] = 'Menu';

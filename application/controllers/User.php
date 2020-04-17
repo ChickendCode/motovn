@@ -26,10 +26,7 @@ class User extends CI_Controller {
 	 */
 	public function index()
 	{
-		if (!$this->ion_auth->logged_in())
-        {
-            redirect('auth/login', 'refresh');
-		}
+		$this->ion_auth->check_login();
 
 		$userdata =  $this->session->userdata('identity');
 		$user = $this->T_user_model->get_t_user($userdata['username']);
@@ -43,6 +40,8 @@ class User extends CI_Controller {
 	// log the user in
 	function update()
 	{
+		$this->ion_auth->check_login();
+		
 		$old_password = $this->input->post('old_password');
 		$new_password = $this->input->post('new_password');
 		$re_password = $this->input->post('re_password');

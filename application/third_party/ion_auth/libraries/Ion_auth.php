@@ -452,13 +452,20 @@ class Ion_auth
 
 		$recheck = $this->ion_auth_model->recheck_session();
 
-		// auto-login the user if they are remembered
-		// if (!$recheck)
-		// {
-		// 	$recheck = $this->ion_auth_model->login_remembered_user();
-		// }
-
 		return $recheck;
+	}
+
+	/**
+	 * Auto logs-in the user if they are remembered
+	 * @return bool Whether the user is logged in
+	 * @author Mathew
+	 **/
+	public function check_login()
+	{
+		if (!$this->logged_in())
+        {
+            redirect('auth/login', 'refresh');
+		}
 	}
 
 	/**
