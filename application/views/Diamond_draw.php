@@ -38,7 +38,7 @@
     <legend>Lịch sử rút kim cương</legend>
     <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Hover Data Table</h3>
+              <h3 class="box-title"></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -54,47 +54,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            1.000.000
-                        </td>
-                        <td>1000</td>
-                        <td>15/04 20:00</td>
-                        <td>Justin</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            1.000.000
-                        </td>
-                        <td>1000</td>
-                        <td>15/04 20:00</td>
-                        <td>Justin</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>
-                            1.000.000
-                        </td>
-                        <td>1000</td>
-                        <td>15/04 20:00</td>
-                        <td>Justin</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>
-                            1.000.000
-                        </td>
-                        <td>1000</td>
-                        <td>15/04 20:00</td>
-                        <td>Justin</td>
-                        <td></td>
-                    </tr>
-                
+                    <?php 
+                    $count = 1;
+                    foreach ($tranlog as $data) {?>
+                        <tr>
+                            <td><?php echo $count ?></td>
+                            <td><?php echo number_format(($data['coin_request'] / 100), 3, '.', '.'); ?></td>
+                            <td><?php echo number_format(($data['coin_receive'] / 100), 3, '.', '.'); ?></td>
+                            <td><?php echo $data['timecreate'] ?></td>
+                            <td><?php echo $data['rolename'] ?></td>
+                            <td></td>
+                        </tr>
+                    <?php $count++; } ?>
                 </tfoot>
               </table>
             </div>

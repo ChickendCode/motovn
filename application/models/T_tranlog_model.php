@@ -11,9 +11,9 @@ class T_tranlog_model extends CI_Model
     /*
      * Get t_tranlog by id
      */
-    function get_t_tranlog($id)
+    function get_t_tranlog($uid)
     {
-        return $this->db->get_where('t_tranlog',array('id'=>$id))->row_array();
+        return $this->db->get_where('t_tranlog',array('uid'=>$uid))->result_array();
     }
         
     /*

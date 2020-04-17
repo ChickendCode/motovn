@@ -37,10 +37,13 @@ class Diamonddraw extends CI_Controller {
 		$this->ion_auth->check_login();
 		
 		$serverdata = $this->T_serverdata_model->get_all_t_serverdata();
+		$userdata =  $this->session->userdata('identity');
+		$tranlog = $this->T_tranlog_model->get_t_tranlog($userdata['username']);
 		$data['subview'] = 'Diamond_draw';
 		$data['title'] = 'Hệ thống rút kim cương';
 		$data['serverdata'] = $serverdata;
 		$data['diamondlist'] = DIAMOND_LIST;
+		$data['tranlog'] = $tranlog;
 		
 		$this->load->view('main.php', $data);
 	}
