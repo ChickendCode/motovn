@@ -48,26 +48,24 @@ class User extends CI_Controller {
 		$email = $this->input->post('email');
 		$phone = $this->input->post('phone');
 		$date = new DateTime("NOW");
-
+		
 		$user = $this->T_user_model->get_t_user_by_pwd(md5($old_password));
+
+		$data = $this->createFormData(
+			$old_password, 
+			$new_password,
+			$re_password,
+			$email,
+			$phone
+		);
+
 		if (!isset($user)) {
-			$data = $this->createFormData(
-				$old_password, 
-				$new_password,
-				$re_password,
-				$email,
-				$phone
-			);
 			$data['message'] = MSG_OLD_PASS_NOT_COMPARE;
 			$data['type'] = TYPE_DANGER;
+		} else if (strlen($new_password) <= 6) {
+			$data['message'] = MSG_PASSWORD_THAN_6;
+			$data['type'] = TYPE_DANGER;
 		} else if ($new_password != $re_password) {
-			$data = $this->createFormData(
-				$old_password, 
-				$new_password,
-				$re_password,
-				$email,
-				$phone
-			);
 			$data['message'] = MSG_NOT_COMPARE;
 			$data['type'] = TYPE_DANGER;
 		} else {
