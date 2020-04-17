@@ -34,12 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg text-danger">
-      <?php 
-          if(isset($message)) {
-            echo $message;
-          }
-      ?></p>
+    <p class="login-box-msg">ĐĂNG KÝ TÀI KHOẢN</p>
 
     <?php echo form_open('register/regist');?>
       <div class="form-group has-feedback">
@@ -78,11 +73,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 <!-- /.login-box -->
 
+ <!-- /.modal -->
+ <div class="modal fade" id="commonModel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="hideModelDialog()">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" onclick="hideModelDialog()">Đóng</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <!-- jQuery 3 -->
 <script src="../../assets/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="../../assets/plugins/iCheck/icheck.min.js"></script>
+
+<script src="../../assets/js/common.js"></script>
+
+<?php  if(isset($message)) {?>
+    <script>
+        showModelDialog('<?php echo $type ?>', TITLE, '<?php echo $message ?>');
+    </script>
+<?php }?>
 </body>
 </html>

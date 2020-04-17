@@ -31,7 +31,6 @@ class Register extends CI_Controller {
 		$this->load->view('register.php', $data);
 	}
 
-	// log the user in
 	function regist()
 	{
 		$username = $this->input->post('username');
@@ -50,6 +49,7 @@ class Register extends CI_Controller {
 				$phone
 			);
 			$data['message'] = MSG_NOT_COMPARE;
+			$data['type'] = TYPE_DANGER;
 		} else {
 			$user = $this->T_user_model->get_t_user($username);
 			if (isset($user)) {
@@ -61,6 +61,7 @@ class Register extends CI_Controller {
 					$phone
 				);
 				$data['message'] = MSG_USER_EXIST;
+				$data['type'] = TYPE_DANGER;
 			} else {
 				$params = array(
 					'username' => $username,
@@ -81,6 +82,7 @@ class Register extends CI_Controller {
 				$this->T_user_model->add_t_user($params);
 	
 				$data = $this->createFormData();
+				$data['type'] = TYPE_SUCCESS;
 				$data['message'] = MSG_SUCCCESS;
 			}
 		}
