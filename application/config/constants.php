@@ -121,3 +121,4 @@ define('STR_SUCCESS', 'success');
 define('MSG_USER_NAME_THAN_6', '[Tên đăng nhập] bắt buộc lớn hơn 6 ký tự !');
 define('MSG_PASSWORD_THAN_6', '[Mật khẩu] bắt buộc lớn hơn 6 ký tự !');
 define('MSG_PHONE_NUMBER_THAN_9', '[Số điện thoại] bắt buộc lớn hơn 9 ký tự !');
+define('MSG_MONEY_INVALID', 'Số tiền trong tài khoản không đủ để rút');

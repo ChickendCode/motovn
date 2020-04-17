@@ -93,103 +93,104 @@ class Diamonddraw extends CI_Controller {
 			
 			//  Trừ money trong t_users (Database server_info)
 			$money = $userdata['money'] - (int)$money_client;
-			$params = array('money'=> $money);
-			$this->T_user_model->update_t_user($userdata['userid'], $params);
 
-			$content = '';
-			if ($serverName == SERVER_1) {
-				$content = DIAMOND_DRAW_01;
+			if ($money < 0) {
+				$response[REQ_STATUS_KEY] = REQ_STATUS_NG;
+				$response[REQ_ERROR_KEY] = [MSG_MONEY_INVALID];
 			} else {
-				$content = DIAMOND_DRAW_02;
-			}
+				$params = array('money'=> $money);
+				$this->T_user_model->update_t_user($userdata['userid'], $params);
 
-			$db_server_other = $this->load->database($serverName, TRUE);
-			$role = $this->T_role_model->get_t_role(XYMU.$userdata['username'], $db_server_other);
-			//  Ghi log vào bảng t_tranlog
-			$params = array(
-				'uid' => $userdata['username'],
-				'title' => DIAMOND_DRAW,
-				'timecreate' => date('Y-m-d H:i:s'),
-				'coin_request' => $money_client,
-				'coin_receive' => $money_client,
-				'roleid' => $role[0]['rid'],
-				'rolename' => $role[0]['rname'],
-				'zoneid' => $role[0]['zoneid'],
-				'content' => str_replace('{0}', $money_client, $content),
-			);
-			
-			$this->T_tranlog_model->add_t_tranlog($params);
+				$content = '';
+				if ($serverName == SERVER_1) {
+					$content = DIAMOND_DRAW_01;
+				} else {
+					$content = DIAMOND_DRAW_02;
+				}
 
-			// if If an exception occurs rollback , otherwise commit
-			if ($this->db->trans_status() === FALSE)
-			{
-				$this->db->trans_rollback();
-				log_message('error', 'Update data error');
-			}
-			else
-			{
-				$this->db->trans_commit();
-				log_message('error', 'Update data success');
-
-				// Connect db server other
 				$db_server_other = $this->load->database($serverName, TRUE);
-
-				$db_server_other->trans_begin();
-				
-				//  Insert tiền tưng ứng vô record trong t_inputlog
-				$last_idO = time();
-				// add TInputlog
-				$zoneID = $zoneid;
-				$inputtime = date("Y-m-d H:i:s");
-				$sign = "Mastertoan_".time();
-				$time = time();
-				$u = $_SESSION["userID"];
+				$role = $this->T_role_model->get_t_role(XYMU.$userdata['username'], $db_server_other);
+				//  Ghi log vào bảng t_tranlog
 				$params = array(
-					'amount' => $money_client,
-					'u' => XYMU.$userdata['username'],
-					'rid' => $role[0]['rid'],
-					'order_no' => $last_idO,
-					'cporder_no' => $last_idO,
-					'time' => round(microtime(true) * 1000),
-					'sign' => $sign,
-					'inputtime' => date('Y-m-d H:i:s'),
-					'result' => STR_SUCCESS,
+					'uid' => $userdata['username'],
+					'title' => DIAMOND_DRAW,
+					'timecreate' => date('Y-m-d H:i:s'),
+					'coin_request' => $money_client,
+					'coin_receive' => $money_client,
+					'roleid' => $role[0]['rid'],
+					'rolename' => $role[0]['rname'],
 					'zoneid' => $role[0]['zoneid'],
-					'itemid' => 0,
-					'chargetime' => date('Y-m-d H:i:s'),
+					'content' => str_replace('{0}', $money_client, $content),
 				);
 				
-				$t_inputlog_id = $this->T_inputlog_model->add_t_inputlog($params, $db_server_other);
+				$this->T_tranlog_model->add_t_tranlog($params);
 
-				// //  Insert tiền vô record trong t_tempmoney
-                $timeAdd =  date('Y-m-d H:i:s');
-                $cc = strtoupper(md5('jOU8l>.fjofw16d21f3s13e5.*'.$userdata['username'].'YY'.$money_client.'.ean13'.$timeAdd));
-                $stringcc = substr($cc ,24, 8);
-                $cc2 = strtoupper(md5('jOU81>.fjoeanl3fw16d21f.*'.$stringcc.'YY'.$userdata['username'].'3sl3e5.'.$money_client.'='.$timeAdd));
-                $cc = substr($cc2, 0, 24) . substr($cc, 24, 8);
-				$params = array(
-					'cc' => $cc,
-					'uid' =>$userdata['username'],
-					'rid' => $role[0]['rid'],
-					'addmoney' => $money_client,
-					'itemid' => 0,
-					'chargetime' => date('Y-m-d H:i:s'),
-				);
-				
-				$t_tempmoney_id = $this->T_tempmoney_model->add_t_tempmoney($params,  $db_server_other);
-
-				if ($db_server_other->trans_status() === FALSE)
+				// if If an exception occurs rollback , otherwise commit
+				if ($this->db->trans_status() === FALSE)
 				{
-					$db_server_other->trans_rollback();
+					$this->db->trans_rollback();
 					log_message('error', 'Update data error');
 				}
 				else
 				{
-					$db_server_other->trans_commit();
+					$this->db->trans_commit();
 					log_message('error', 'Update data success');
+
+					// Connect db server other
+					$db_server_other = $this->load->database($serverName, TRUE);
+
+					$db_server_other->trans_begin();
+					
+					//  Insert tiền tưng ứng vô record trong t_inputlog
+					$last_idO = time();
+					$sign = "Mastertoan_".time();
+					$params = array(
+						'amount' => $money_client,
+						'u' => XYMU.$userdata['username'],
+						'rid' => $role[0]['rid'],
+						'order_no' => $last_idO,
+						'cporder_no' => $last_idO,
+						'time' => round(microtime(true) * 1000),
+						'sign' => $sign,
+						'inputtime' => date('Y-m-d H:i:s'),
+						'result' => STR_SUCCESS,
+						'zoneid' => $role[0]['zoneid'],
+						'itemid' => 0,
+						'chargetime' => date('Y-m-d H:i:s'),
+					);
+					
+					$t_inputlog_id = $this->T_inputlog_model->add_t_inputlog($params, $db_server_other);
+
+					// //  Insert tiền vô record trong t_tempmoney
+					$timeAdd =  date('Y-m-d H:i:s');
+					$cc = strtoupper(md5('jOU8l>.fjofw16d21f3s13e5.*'.$userdata['username'].'YY'.$money_client.'.ean13'.$timeAdd));
+					$stringcc = substr($cc ,24, 8);
+					$cc2 = strtoupper(md5('jOU81>.fjoeanl3fw16d21f.*'.$stringcc.'YY'.$userdata['username'].'3sl3e5.'.$money_client.'='.$timeAdd));
+					$cc = substr($cc2, 0, 24) . substr($cc, 24, 8);
+					$params = array(
+						'cc' => $cc,
+						'uid' =>$userdata['username'],
+						'rid' => $role[0]['rid'],
+						'addmoney' => $money_client,
+						'itemid' => 0,
+						'chargetime' => date('Y-m-d H:i:s'),
+					);
+					
+					$t_tempmoney_id = $this->T_tempmoney_model->add_t_tempmoney($params,  $db_server_other);
+
+					if ($db_server_other->trans_status() === FALSE)
+					{
+						$db_server_other->trans_rollback();
+						log_message('error', 'Update data error');
+					}
+					else
+					{
+						$db_server_other->trans_commit();
+						log_message('error', 'Update data success');
+					}
 				}
 			}
-
+			
         } catch (Exception $e) {
 			log_message('error', $e->getMessage());
 			$response[REQ_STATUS_KEY] = REQ_STATUS_NG;

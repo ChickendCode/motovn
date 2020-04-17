@@ -2,9 +2,15 @@ $(function(){
     $('#diamonDraw').click(function(){
         var money = $('#money').val();
         var serverName = $('#serverName').val();
+        var figure = $('#figure').val();
 
         if (serverName == '') {
             showModelDialog(TYPE_DANGER, TITLE, 'Vui lòng chọn máy chủ');
+            return;
+        }
+
+        if (figure == '' || figure == null) {
+            showModelDialog(TYPE_DANGER, TITLE, 'Vui lòng chọn nhân vật');
             return;
         }
 
@@ -12,13 +18,18 @@ $(function(){
             showModelDialog(TYPE_DANGER, TITLE, 'Vui lòng chọn kim cương');
             return;
         }
-
+        
         $.ajax({
             url: 'Diamonddraw/diamon_draw',
             type: 'POST',
             data: {'money': money, 'serverName' : serverName},
-            success: function( data, textStatus, jQxhr ){
-                showModelDialog(TYPE_SUCCESS, TITLE, 'Rút tiền thành công', callBackFn);
+            success: function(data, textStatus, jQxhr ){
+                data = JSON.parse(data);
+                if (data.status == 'OK') {
+                    showModelDialog(TYPE_SUCCESS, TITLE, 'Rút tiền thành công', callBackFn);
+                } else {
+                    showModelDialog(TYPE_DANGER, TITLE, data.errors[0]);
+                }
             },
             error: function( jqXhr, textStatus, errorThrown ){
                 showModelDialog(TYPE_DANGER, TITLE, 'Rút tiền thất bại');
