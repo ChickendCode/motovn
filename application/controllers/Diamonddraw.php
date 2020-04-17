@@ -131,52 +131,52 @@ class Diamonddraw extends CI_Controller {
 				$this->db->trans_commit();
 				log_message('error', 'Update data success');
 
-				// // Connect db server other
-				// $db_server_other = $this->load->database($serverName, TRUE);
+				// Connect db server other
+				$db_server_other = $this->load->database($serverName, TRUE);
 
-				// $db_server_other->trans_begin();
+				$db_server_other->trans_begin();
 				
-				// //  Insert tiền tưng ứng vôrecord trong t_inputlog
-				// $params = array(
-				// 	'amount' => $this->input->post('amount'),
-				// 	'u' => $this->input->post('u'),
-				// 	'rid' => $this->input->post('rid'),
-				// 	'order_no' => $this->input->post('order_no'),
-				// 	'cporder_no' => $this->input->post('cporder_no'),
-				// 	'time' => $this->input->post('time'),
-				// 	'sign' => $this->input->post('sign'),
-				// 	'inputtime' => $this->input->post('inputtime'),
-				// 	'result' => $this->input->post('result'),
-				// 	'zoneid' => $this->input->post('zoneid'),
-				// 	'itemid' => $this->input->post('itemid'),
-				// 	'chargetime' => $this->input->post('chargetime'),
-				// );
+				//  Insert tiền tưng ứng vô record trong t_inputlog
+				$params = array(
+					'amount' => $money_client,
+					'u' => XYMU.$userdata['username'],
+					'rid' => $role[0]['rid'],
+					'order_no' => '771586805736',
+					'cporder_no' => '771586805736',
+					'time' => round(microtime(true) * 1000),
+					'sign' => 'keySignMasTerToan',
+					'inputtime' => date('Y-m-d H:i:s'),
+					'result' => STR_SUCCESS,
+					'zoneid' => $role[0]['zoneid'],
+					'itemid' => 0,
+					'chargetime' => date('Y-m-d H:i:s'),
+				);
 				
-				// $t_inputlog_id = $this->T_inputlog_model->add_t_inputlog($params, $db_server_other);
+				$t_inputlog_id = $this->T_inputlog_model->add_t_inputlog($params, $db_server_other);
 
-				// //  Insert tiền tưng ứng vô record trong t_tempmoney
-				// $params = array(
-				// 	'cc' => $this->input->post('cc'),
-				// 	'uid' => $this->input->post('uid'),
-				// 	'rid' => $this->input->post('rid'),
-				// 	'addmoney' => $this->input->post('addmoney'),
-				// 	'itemid' => $this->input->post('itemid'),
-				// 	'budanflag' => $this->input->post('budanflag'),
-				// 	'chargetime' => $this->input->post('chargetime'),
-				// );
+				// //  Insert tiền vô record trong t_tempmoney
+				$params = array(
+					'cc' => null,
+					'uid' =>$userdata['username'],
+					'rid' => $role[0]['rid'],
+					'addmoney' => $money_client,
+					'itemid' => 0,
+					'budanflag' => 0,
+					'chargetime' => date('Y-m-d H:i:s'),
+				);
 				
-				// $t_tempmoney_id = $this->T_tempmoney_model->add_t_tempmoney($params,  $db_server_other);
+				$t_tempmoney_id = $this->T_tempmoney_model->add_t_tempmoney($params,  $db_server_other);
 
-				// if ($db_server_other->trans_status() === FALSE)
-				// {
-				// 	$db_server_other->trans_rollback();
-				// 	log_message('error', 'Update data error');
-				// }
-				// else
-				// {
-				// 	$db_server_other->trans_commit();
-				// 	log_message('error', 'Update data success');
-				// }
+				if ($db_server_other->trans_status() === FALSE)
+				{
+					$db_server_other->trans_rollback();
+					log_message('error', 'Update data error');
+				}
+				else
+				{
+					$db_server_other->trans_commit();
+					log_message('error', 'Update data success');
+				}
 			}
 
         } catch (Exception $e) {

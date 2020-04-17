@@ -117,3 +117,4 @@ define('MSG_SUCCCESS_UPDATE', 'Cập nhật thành công');
 define('TYPE_SUCCESS', 'modal-success');
 define('TYPE_DANGER', 'modal-danger');
 define('LOGIN_WRONG', 'Sai tên đăng nhập hoặc password');
+define('STR_SUCCESS', 'success');
