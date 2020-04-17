@@ -44,7 +44,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="logDraw" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>STT</th>
@@ -77,3 +77,13 @@
   </fieldset>
   </div>
   <script src="../../assets/js/diamon_draw.js"></script>
+  <script>
+    $('#logDraw').DataTable({
+        'paging'      : true,
+        'lengthChange': false,
+        'searching'   : false,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : false
+    });
+  </script>
