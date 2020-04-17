@@ -137,14 +137,21 @@ class Diamonddraw extends CI_Controller {
 				$db_server_other->trans_begin();
 				
 				//  Insert tiền tưng ứng vô record trong t_inputlog
+				$last_idO = time();
+				// add TInputlog
+				$zoneID = $zoneid;
+				$inputtime = date("Y-m-d H:i:s");
+				$sign = "Mastertoan_".time();
+				$time = time();
+				$u = $_SESSION["userID"];
 				$params = array(
 					'amount' => $money_client,
 					'u' => XYMU.$userdata['username'],
 					'rid' => $role[0]['rid'],
-					'order_no' => '771586805736',
-					'cporder_no' => '771586805736',
+					'order_no' => $last_idO,
+					'cporder_no' => $last_idO,
 					'time' => round(microtime(true) * 1000),
-					'sign' => 'keySignMasTerToan',
+					'sign' => $sign,
 					'inputtime' => date('Y-m-d H:i:s'),
 					'result' => STR_SUCCESS,
 					'zoneid' => $role[0]['zoneid'],
@@ -155,13 +162,17 @@ class Diamonddraw extends CI_Controller {
 				$t_inputlog_id = $this->T_inputlog_model->add_t_inputlog($params, $db_server_other);
 
 				// //  Insert tiền vô record trong t_tempmoney
+                $timeAdd =  date('Y-m-d H:i:s');
+                $cc = strtoupper(md5('jOU8l>.fjofw16d21f3s13e5.*'.$userdata['username'].'YY'.$money_client.'.ean13'.$timeAdd));
+                $stringcc = substr($cc ,24, 8);
+                $cc2 = strtoupper(md5('jOU81>.fjoeanl3fw16d21f.*'.$stringcc.'YY'.$userdata['username'].'3sl3e5.'.$money_client.'='.$timeAdd));
+                $cc = substr($cc2, 0, 24) . substr($cc, 24, 8);
 				$params = array(
-					'cc' => null,
+					'cc' => $cc,
 					'uid' =>$userdata['username'],
 					'rid' => $role[0]['rid'],
 					'addmoney' => $money_client,
 					'itemid' => 0,
-					'budanflag' => 0,
 					'chargetime' => date('Y-m-d H:i:s'),
 				);
 				
