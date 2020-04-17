@@ -68,15 +68,20 @@
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
-
             <!-- User Account Menu -->
             <li class="dropdown user user-menu">
               <!-- Menu Toggle Button -->
               <a href="#">
                 <span class="hidden-xs">Xin chào <?php echo $userdata['username'] ?> - Bạn đang có <?php echo $userdata['money'] ?> xu</span>
-                <button type="button" class="btn btn-success" style="margin-left:5px" id="logout">Đăng xuất</button>
               </a>
-          </li>
+            </li>
+            <li class="dropdown user user-menu">
+              <!-- Menu Toggle Button -->
+                <a href="/auth/logout">
+                <button type="button" class="btn btn-success" style="margin-left:5px" id="logout">Đăng xuất</button>
+                </a>
+              </a>
+            </li>
         </ul>
         </div>
         <!-- /.navbar-custom-menu -->
