@@ -61,8 +61,6 @@ class Diamonddraw extends CI_Controller {
 		$db_server_other = $this->load->database($databaseName, TRUE);
 		$userdata =  $this->session->userdata('identity');
 		$role = $this->T_role_model->get_t_role(XYMU.$userdata['username'], $db_server_other);
-		$this->session->userdata("role", $role);
-		echo $this->session->userdata("role");
 
 		try {
 			$response[REQ_DATA_KEY] = array(
@@ -105,23 +103,22 @@ class Diamonddraw extends CI_Controller {
 				$content = DIAMOND_DRAW_02;
 			}
 
-			$role = $this->session->userdata("role");
-			echo print_r($role);
+			$db_server_other = $this->load->database($serverName, TRUE);
+			$role = $this->T_role_model->get_t_role(XYMU.$userdata['username'], $db_server_other);
 			//  Ghi log vào bảng t_tranlog
 			$params = array(
-				'uid' => $userdata['userid'],
+				'uid' => $userdata['username'],
 				'title' => DIAMOND_DRAW,
 				'timecreate' => date('Y-m-d H:i:s'),
 				'coin_request' => $money_client,
 				'coin_receive' => $money_client,
-				'roleid' => $role['rid'],
-				'rolename' => $role['rname'],
-				'zoneid' => $role['zoneid'],
-				'content' => $content,
+				'roleid' => $role[0]['rid'],
+				'rolename' => $role[0]['rname'],
+				'zoneid' => $role[0]['zoneid'],
+				'content' => str_replace('{0}', $money_client, $content),
 			);
 			
 			$this->T_tranlog_model->add_t_tranlog($params);
-			
 
 			// if If an exception occurs rollback , otherwise commit
 			if ($this->db->trans_status() === FALSE)

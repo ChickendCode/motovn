@@ -127,7 +127,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" onclick="hideModelDialog()">Đóng</button>
-        <button type="button" class="btn btn-outline">Save changes</button>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -140,4 +139,3 @@
 
 </body>
 </html>
-<script src="../../assets/js/home.js"></script>
